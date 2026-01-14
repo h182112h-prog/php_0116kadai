@@ -15,12 +15,12 @@ $fileTmpName = $_FILES['csv_file']['tmp_name'];
     var_dump($fileTmpName);
     echo '</pre>';
 
-$dir = __DIR__ . '/csv/';
+// $dir = __DIR__ . '/csv/';
 
-echo "ディレクトリのパス: " . $dir . "<br>";
-echo "存在するか: " . (is_dir($dir) ? "YES" : "NO") . "<br>";
-echo "書き込み可能か: " . (is_writable($dir) ? "YES" : "NO") . "<br>";
-echo "PHPを実行しているユーザー: " . posix_getpwuid(posix_geteuid())['name'] . "<br>";
+// echo "ディレクトリのパス: " . $dir . "<br>";
+// echo "存在するか: " . (is_dir($dir) ? "YES" : "NO") . "<br>";
+// echo "書き込み可能か: " . (is_writable($dir) ? "YES" : "NO") . "<br>";
+// echo "PHPを実行しているユーザー: " . posix_getpwuid(posix_geteuid())['name'] . "<br>";
 
 // ファイルパス
 $file = __DIR__ . '/csv/'. $fileName;
@@ -54,12 +54,17 @@ $pdo = db_conn(); //returnした関数内の$pdoを代入
 
 
 
+
+//３．データ登録SQL作成
+    
+
 foreach ($data as $key => $row) {
 
-// usersテーブルにデータを挿入する
-    if($key === 0) {
-      continue;
-    }
+    // usersテーブルにデータを挿入する
+        if($key === 0) {
+        continue;
+        }
+
     $id = $row[0];
     $name = $row[1];
     $job_type = $row[2];
@@ -67,17 +72,15 @@ foreach ($data as $key => $row) {
     $evaluation_2025h1 = $row[4];
     $evaluation_2025h2 = $row[5];
 
-
-//３．データ登録SQL作成
-    $stmt = $db->prepare("INSERT INTO gs_one_table (id, name,job_type , annual_salary,evaluation_2025h1,evaluation_2025h2) VALUES (:id, :name,:job_type , :annual_salary,:evaluation_2025h1,:evaluation_2025h2)");
-    $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':job_type', $job_type);
-    $stmt->bindParam(':annual_salary', $annual_salary);
-    $stmt->bindParam(':evaluation_2025h1', $evaluation_2025h1);
-    $stmt->bindParam(':evaluation_2025h2', $evaluation_2025h2);
+    $stmt = $pdo->prepare("INSERT INTO gs_one_table (id,name,job_type,annual_salary,evaluation_2025h1,evaluation_2025h2) VALUES (:id,:name,:job_type ,:annual_salary,:evaluation_2025h1,:evaluation_2025h2)");
+    $stmt->bindParam(':id', $row[0], PDO::PARAM_INT);
+    $stmt->bindParam(':name', $row[1], PDO::PARAM_STR);
+    $stmt->bindParam(':job_type', $row[2], PDO::PARAM_STR);
+    $stmt->bindParam(':annual_salary', $annual_salary, PDO::PARAM_INT);
+    $stmt->bindParam(':evaluation_2025h1', $row[4], PDO::PARAM_STR);
+    $stmt->bindParam(':evaluation_2025h2', $row[5], PDO::PARAM_STR);
     $stmt->execute();
   }
-// echo 'CSVアップロードが完了しました';
+echo 'CSVアップロードが完了しました';
 
 ?>
