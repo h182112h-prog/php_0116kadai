@@ -15,16 +15,28 @@ $fileTmpName = $_FILES['csv_file']['tmp_name'];
     var_dump($fileTmpName);
     echo '</pre>';
 
+$dir = __DIR__ . '/csv/';
+
+echo "ディレクトリのパス: " . $dir . "<br>";
+echo "存在するか: " . (is_dir($dir) ? "YES" : "NO") . "<br>";
+echo "書き込み可能か: " . (is_writable($dir) ? "YES" : "NO") . "<br>";
+echo "PHPを実行しているユーザー: " . posix_getpwuid(posix_geteuid())['name'] . "<br>";
+
 // ファイルパス
-$file = './csv/'. $fileName;
+$file = __DIR__ . '/csv/'. $fileName;
 
     echo '<pre>';
     var_dump($file);
     echo '</pre>';
 
 // CSVファイルをcsvディレクトリに保存する
-// ↓にエラーがありそう
-move_uploaded_file($fileTmpName, $file);
+// ターミナルへ↓を入力しないとアップロードできなかった。どうやらxampでのphp書き込み権限がないらしい
+//chmod 777 /Applications/XAMPP/xamppfiles/htdocs/php_0116kadai/csv/
+if(move_uploaded_file($fileTmpName, $file)){
+    echo "ファイルが正常にアップロードされました。";
+} else {
+    echo "ファイルのアップロードに失敗しました。";
+}
 
 // csvディレクトリに保存したCSVファイルを読み込み、配列に置き換る。
 $data = array_map('str_getcsv', file($file));
@@ -32,7 +44,7 @@ $data = array_map('str_getcsv', file($file));
     echo '<pre>';
     var_dump($data);
     echo '</pre>';
-// ↑ここらへんにエラーがありそう
+
 
 
 //2. DB接続します
