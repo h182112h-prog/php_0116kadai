@@ -17,15 +17,14 @@
     </header>
 
     <!-- method, action, 各inputのnameを確認してください。  -->
-    <form method="POST" action="insert.php">
+   <form method="POST" action="insert.php" enctype="multipart/form-data">
         <div>
             <fieldset>
-                <legend>フリーアンケート</legend>
-                <label>名前：<input type="text" name="name"></label><br>
-                <label>Email：<input type="text" name="email"></label><br>
-                <label>年齢：<input type="text" name="age"></label><br>
-                <label><textarea name="content" rows="4" cols="40"></textarea></label><br>
-                <input type="submit" value="送信">
+                <legend>HRデータアップロード</legend>
+                  <!-- ① CSVファイルアップロード -->
+                    <label for="csvFile">CSVファイルを選択：</label>
+                    <input type="file" name="csv_file"><br>
+                    <button type="submit">アップロード</button>
             </fieldset>
         </div>
     </form>
