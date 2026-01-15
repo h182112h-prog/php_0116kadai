@@ -52,9 +52,6 @@ $data = array_map('str_getcsv', file($file));
 require_once('funcs.php');
 $pdo = db_conn(); //returnした関数内の$pdoを代入
 
-
-
-
 //３．データ登録SQL作成
     
 

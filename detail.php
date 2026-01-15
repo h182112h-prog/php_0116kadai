@@ -46,11 +46,11 @@ if ($status === false) {
     </header>
 
     <!-- method, action, 各inputのnameを確認してください。  -->
-    <form method="POST" action="update.php">
+    <form method="POST" action="update.php" enctype="multipart/form-data">
         <div>
             <fieldset>
                 <legend>HRデータ</legend>
-                <label>社員番号：<input type="text" name="id" value="<?= $result['id']?>"></label><br>
+                <label>社員番号：<?= $result['id']?></label><br>
                 <label>氏名：<input type="text" name="name" value="<?= $result['name']?>"></label><br>
                 <label>職種：<input type="text" name="job_type" value="<?= $result['job_type']?>" ></label><br>
                 <label>年収：<input type="text" name="annual_salary" value="<?= $result['annual_salary']?>" ></label><br>
