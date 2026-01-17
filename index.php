@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>HRデータ登録</title>
+    <title>HRデータレイク</title>
     <!-- <link href="css/style.css" rel="stylesheet"> -->
 </head>
 
