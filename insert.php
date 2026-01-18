@@ -61,7 +61,7 @@ foreach ($data as $key => $row) {
         if($key === 0) {
         continue;
         }
-
+    // ↓ループ処理で自動取得・指定できるようにする
     $id = $row[0];
     $name = $row[1];
     $job_type = $row[2];
